@@ -7,14 +7,38 @@
 	</parent>
 
 	<groupId>de.osthus.jenkins.plugins</groupId>
- 	<artifactId>gitflow-plugin</artifactId>
-	
-	<name>Create jobs by Git branches</name>
-	<description>This plugin provides a build step for freestyle Jobs. It monitors the available branches in a Git repository and creates/deletes Jobs for each branch. Useful if you emply the Gitflow branching model designed by Vincent Driessen.</description>
-	<url>https://github.com/OSTHUS/jenkins-gitflow-plugin</url>
-	 
-	<version>1.0.8</version>
+ 	<artifactId>gitflow</artifactId>
+ 	<version>1.0.9</version>
 	<packaging>hpi</packaging>
+	
+	<name>Jenkins Gitflow plugin</name>
+	<description>Jenkins Gitflow plugin.  Monitors branches in a Git repo and creates/deletes Jobs for each branch. Gitflow is an idea by Vincent Driessen. Google it :)</description>
+	<url>https://github.com/OSTHUS/jenkins-gitflow-plugin</url>
+	
+	<licenses>
+		<license>
+			<name>The MIT License (MIT)</name>
+			<url>http://opensource.org/licenses/MIT</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	
+	<scm>
+		<url>https://github.com/OSTHUS/jenkins-gitflow-plugin</url>
+		<connection>scm:git:git://github.com/OSTHUS/jenkins-gitflow-plugin.git</connection>
+		<developerConnection>scm:git:git@github.com:OSTHUS/jenkins-gitflow-plugin.git</developerConnection>
+	</scm> 
+	
+	<developers>
+		<developer>
+			<email>daniel.mueller@osthus.com</email>
+			<name>Daniel Mueller</name>
+			<url>https://github.com/osthus-dm</url>
+			<id>osthus-dm</id>
+		</developer>
+	</developers>	
+	 
+
 
 	<repositories>
 		<repository>

@@ -22,8 +22,11 @@
   </f:entry>  
   <f:entry title="Branch name regex" field="branchRegex">
     <f:textbox />
-  </f:entry>  
-  <f:entry title="Jobname prefix" field="baseJobName">
+  </f:entry>
+  <f:entry title="Max. branch age" field="maxBranchAgeInDays">
     <f:textbox />
   </f:entry>
+  <f:entry title="Jobname prefix" field="baseJobName">
+    <f:textbox />
+  </f:entry>  
 </j:jelly>
