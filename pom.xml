@@ -3,17 +3,18 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>1.617</version>
+		<!-- <version>1.617</version> -->
 		<!-- <version>1.580.1</version> -->
+		<version>2.9</version>
 	</parent>
 
 	<groupId>de.osthus.jenkins.plugins</groupId>
- 	<artifactId>gitflow</artifactId>
- 	<version>1.0.9</version>
+ 	<artifactId>multibranch-job-creator</artifactId>
+ 	<version>1.0.10</version>
 	<packaging>hpi</packaging>
 	
-	<name>Jenkins Gitflow plugin</name>
-	<description>Jenkins Gitflow plugin.  Monitors branches in a Git repo and creates/deletes Jobs for each branch. Gitflow is an idea by Vincent Driessen. Google it :)</description>
+	<name>Multibranch Job Creator</name>
+	<description>Multibranch Job Creator plugin monitors branches in a Git repo and creates/deletes Jobs for each branch that matches the given regex pattern</description>
 	<url>https://github.com/OSTHUS/jenkins-gitflow-plugin</url>
 	
 	<licenses>
@@ -56,15 +57,20 @@
 	</pluginRepositories>
 
 	<dependencies>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-exec</artifactId>
 			<version>1.2</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>git-client</artifactId>
-			<version>1.9.1</version>
+			<version>1.19.6</version>
 		</dependency>
+		<!-- <dependency>
+			<groupId>org.jenkins-ci.plugins</groupId>
+			<artifactId>git</artifactId>
+			<version>2.4.4</version>
+		</dependency> -->
 	</dependencies>
 </project>

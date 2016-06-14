@@ -4,9 +4,9 @@ import java.util.logging.Logger;
 
 import hudson.Plugin;
 
-public class GitflowPlugin extends Plugin
+public class MultibranchJobCreatorPlugin extends Plugin
 {
-    private final static Logger LOG = Logger.getLogger(GitflowPlugin.class.getName());
+    private final static Logger LOG = Logger.getLogger(MultibranchJobCreatorPlugin.class.getName());
 
     public void start() throws Exception
     {

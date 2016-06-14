@@ -11,24 +11,43 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.ServletException;
+
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.jenkinsci.plugins.gitclient.Git;
 import org.jenkinsci.plugins.gitclient.GitClient;
+import org.jenkinsci.plugins.gitclient.GitURIRequirementsBuilder;
 import org.jenkinsci.plugins.gitclient.RepositoryCallback;
+import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.StaplerRequest;
+
+import com.cloudbees.plugins.credentials.CredentialsProvider;
+import com.cloudbees.plugins.credentials.common.StandardCredentials;
+import com.cloudbees.plugins.credentials.common.StandardListBoxModel;
 
 import hudson.EnvVars;
+import hudson.Extension;
 import hudson.Launcher;
 import hudson.model.AbstractBuild;
+import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
+import hudson.model.FreeStyleProject;
+import hudson.model.Item;
 import hudson.model.Job;
 import hudson.model.TopLevelItem;
 import hudson.plugins.git.Branch;
 import hudson.remoting.VirtualChannel;
+import hudson.security.ACL;
+import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Builder;
+import hudson.util.FormValidation;
+import hudson.util.ListBoxModel;
 import jenkins.model.Jenkins;
+import net.sf.json.JSONObject;
 
 public class JobsByGitBranchBuilder extends Builder
 {
@@ -287,70 +306,73 @@ public class JobsByGitBranchBuilder extends Builder
     }
 
     @Override
-    public GitflowBuilderDescriptor getDescriptor()
+    public MultibranchJobCreatorBuilderDescriptor getDescriptor()
     {
-	return (GitflowBuilderDescriptor) super.getDescriptor();
+	return (MultibranchJobCreatorBuilderDescriptor) super.getDescriptor();
     }
 
-    // @Extension
-    // public static final class JobsByGitBranchBuilderDescriptor extends BuildStepDescriptor<Builder>
-    // {
-    // public JobsByGitBranchBuilderDescriptor()
-    // {
-    // load();
-    // }
-    //
-    // public ListBoxModel doFillCredentialsIdItems(@AncestorInPath Item project, @QueryParameter String url)
-    // {
-    // if (project == null || !project.hasPermission(Item.CONFIGURE))
-    // {
-    // return new StandardListBoxModel();
-    // }
-    // return new StandardListBoxModel().withEmptySelection().withMatching(GitClient.CREDENTIALS_MATCHER,
-    // CredentialsProvider.lookupCredentials(StandardCredentials.class, project, ACL.SYSTEM, GitURIRequirementsBuilder.fromUri(url).build()));
-    // }
-    //
-    // public FormValidation doCheckTemplateJob(@QueryParameter String value) throws IOException, ServletException
-    // {
-    // if (value.length() == 0)
-    // {
-    // return FormValidation.error("Please set a template job");
-    // }
-    // else
-    // {
-    // Job<?, ?> newJobAlreadyExisting = (Job<?, ?>) Jenkins.getInstance().getItem(value);
-    // if (newJobAlreadyExisting == null)
-    // {
-    // return FormValidation.error("Job not found: " + value);
-    // }
-    // }
-    //
-    // return FormValidation.ok();
-    // }
-    //
-    // public FormValidation doCheckJobNameTemplate(@QueryParameter String value) throws IOException, ServletException
-    // {
-    // return FormValidation.ok();
-    // }
-    //
-    // public boolean isApplicable(@SuppressWarnings("rawtypes") Class<? extends AbstractProject> aClass)
-    // {
-    // return true;
-    // }
-    //
-    // /**
-    // * This human readable name is used in the configuration screen.
-    // */
-    // public String getDisplayName()
-    // {
-    // return PLUGIN_TITLE;
-    // }
-    //
-    // @Override
-    // public boolean configure(StaplerRequest req, JSONObject formData) throws FormException
-    // {
-    // save();
-    // return super.configure(req, formData);
-    // }
-    // }
+    @Extension
+    public static class MultibranchJobCreatorBuilderDescriptor extends BuildStepDescriptor<Builder>
+    {
+	private static final String PLUGIN_TITLE = "Multibranch job creation";
+
+	public MultibranchJobCreatorBuilderDescriptor()
+	{
+	    super();
+	    load();
+	}
+
+	public ListBoxModel doFillCredentialsIdItems(@AncestorInPath Item project, @QueryParameter String url)
+	{
+	    if (project == null || !project.hasPermission(Item.CONFIGURE))
+	    {
+		return new StandardListBoxModel();
+	    }
+	    return new StandardListBoxModel().withEmptySelection().withMatching(GitClient.CREDENTIALS_MATCHER,
+		    CredentialsProvider.lookupCredentials(StandardCredentials.class, project, ACL.SYSTEM, GitURIRequirementsBuilder.fromUri(url).build()));
+	}
+
+	public FormValidation doCheckTemplateJob(@QueryParameter String value) throws IOException, ServletException
+	{
+	    if (value.length() == 0)
+	    {
+		return FormValidation.error("Please set a template job");
+	    }
+	    else
+	    {
+		Job<?, ?> newJobAlreadyExisting = (Job<?, ?>) Jenkins.getInstance().getItem(value);
+		if (newJobAlreadyExisting == null)
+		{
+		    return FormValidation.error("Job not found: " + value);
+		}
+	    }
+
+	    return FormValidation.ok();
+	}
+
+	public FormValidation doCheckJobNameTemplate(@QueryParameter String value) throws IOException, ServletException
+	{
+	    return FormValidation.ok();
+	}
+
+	public boolean isApplicable(@SuppressWarnings("rawtypes") Class<? extends AbstractProject> jobType)
+	{
+	    return FreeStyleProject.class.isAssignableFrom(jobType);
+	}
+
+	/**
+	 * This human readable name is used in the configuration screen.
+	 */
+	public String getDisplayName()
+	{
+	    return PLUGIN_TITLE;
+	}
+
+	@Override
+	public boolean configure(StaplerRequest req, JSONObject formData) throws FormException
+	{
+	    save();
+	    return super.configure(req, formData);
+	}
+    }
 }
