@@ -3,7 +3,8 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>1.580.1</version>
+		<version>1.617</version>
+		<!-- <version>1.580.1</version> -->
 	</parent>
 
 	<groupId>de.osthus.jenkins.plugins</groupId>
