@@ -3,6 +3,7 @@ package de.osthus.jenkins.plugins.git;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -49,11 +50,13 @@ import hudson.util.ListBoxModel;
 import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
 
-public class JobsByGitBranchBuilder extends Builder
+public class JobsByGitBranchBuilder extends Builder implements Serializable
 {
 
     // private static final String PLUGIN_TITLE = "Gitflow (Job genesis)";
     // private static final String PROPERTY_BRANCH_NAME = "${branch.name}";
+
+    private static final long serialVersionUID = 1L;
 
     private final Pattern findBranchNamePattern = Pattern.compile(".*\\((.*)\\)");
 
