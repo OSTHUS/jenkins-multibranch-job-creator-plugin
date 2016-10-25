@@ -8,7 +8,7 @@
 
 	<groupId>de.osthus.jenkins.plugins</groupId>
  	<artifactId>multibranch-job-creator</artifactId>
- 	<version>1.0.12</version>
+ 	<version>1.0.15</version>
 	<packaging>hpi</packaging>
 	
 	<name>Multibranch Job Creator</name>
@@ -59,6 +59,11 @@
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>git-client</artifactId>
 			<version>1.19.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jenkins-ci.plugins</groupId>
+			<artifactId>cloudbees-folder</artifactId>
+			<version>5.12</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -17,6 +17,9 @@
     <c:select/>
   </f:entry>
   -->
+  <f:entry title="Target folder" field="targetFolder">
+    <f:textbox />
+  </f:entry> 
   <f:entry title="Checkout subdirectory" field="checkoutDir">
     <f:textbox />
   </f:entry>  
